@@ -1,6 +1,6 @@
 # MediSync 💊
 
-![CI Pipeline](https://github.com/SEU_USUARIO/medisync/actions/workflows/ci.yml/badge.svg)
+![CI Pipeline](https://github.com/ryangomes13/medisync/actions/workflows/ci.yml/badge.svg)
 
 ## 📋 Problema Real
 O esquecimento na administração de medicamentos é um dos principais fatores de complicações de saúde em idosos e pacientes crônicos. O **MediSync** surge como uma ferramenta leve para auxiliar na organização desses horários.
