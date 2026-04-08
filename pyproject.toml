@@ -1,0 +1,8 @@
+[project]
+name = "medisync"
+version = "1.0.0"
+dependencies = []
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W"]
