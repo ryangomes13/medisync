@@ -5,6 +5,7 @@ dependencies = []
 
 [tool.ruff]
 line-length = 88
-# Ignora erros de imports não usados ou espaços se necessário
-ignore = ["F401", "E402"] 
+
+[tool.ruff.lint]
 select = ["E", "F", "W"]
+ignore = ["F401"]
