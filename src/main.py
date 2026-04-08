@@ -1,6 +1,7 @@
 import json
 import os
 
+
 class MedicamentoManager:
     def __init__(self):
         self.medicamentos = []
@@ -14,10 +15,11 @@ class MedicamentoManager:
     def listar_medicamentos(self):
         return self.medicamentos
 
+
 def main():
     manager = MedicamentoManager()
     print("--- MediSync: Seu Assistente de Saúde ---")
-    
+
     while True:
         print("\n1. Adicionar Medicamento\n2. Listar Todos\n3. Sair")
         opcao = input("Escolha uma opção: ")
@@ -38,6 +40,6 @@ def main():
         elif opcao == "3":
             break
 
+
 if __name__ == "__main__":
     main()
-    
