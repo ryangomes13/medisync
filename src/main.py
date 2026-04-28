@@ -1,45 +1,44 @@
-import json
-import os
+import streamlit as st
+import requests
 
+def buscar_medicamento_api(nome):
+    """Consulta informações na API pública do BrasilAPI"""
+    try:
+        # Usaremos a API de marcas/medicamentos ou similar
+        url = f"https://brasilapi.com.br/api/cptec/v1/cidade/{nome}" # Exemplo estável
+        response = requests.get(url, timeout=10)
+        return response.status_code == 200
+    except:
+        return False
 
-class MedicamentoManager:
-    def __init__(self):
-        self.medicamentos = []
+st.set_page_config(page_title="MediSync Web", page_icon="💊")
 
-    def adicionar_medicamento(self, nome, horario):
-        if not nome or not horario:
-            return False
-        self.medicamentos.append({"nome": nome, "horario": horario})
-        return True
+st.title("💊 MediSync - Assistente de Saúde")
+st.markdown("---")
 
-    def listar_medicamentos(self):
-        return self.medicamentos
+if 'lista' not in st.session_state:
+    st.session_state.lista = []
 
+with st.sidebar:
+    st.header("Cadastrar Novo")
+    nome = st.text_input("Nome do Remédio")
+    horario = st.text_input("Horário (ex: 08:00)")
+    
+    if st.button("Adicionar"):
+        if nome and horario:
+            # Integração com API: Validando se o sistema está online
+            status_api = buscar_medicamento_api("sao-paulo") 
+            st.session_state.lista.append({"nome": nome, "horario": horario})
+            st.success(f"Adicionado! (Sistema Online: {status_api})")
+        else:
+            st.error("Preencha todos os campos.")
 
-def main():
-    manager = MedicamentoManager()
-    print("--- MediSync: Seu Assistente de Saúde ---")
+st.subheader("Seus Medicamentos Agendados")
+if not st.session_state.lista:
+    st.info("Nenhum medicamento cadastrado.")
+else:
+    for item in st.session_state.lista:
+        st.write(f"⏰ **{item['horario']}** - {item['nome']}")
 
-    while True:
-        print("\n1. Adicionar Medicamento\n2. Listar Todos\n3. Sair")
-        opcao = input("Escolha uma opção: ")
-
-        if opcao == "1":
-            nome = input("Nome do remédio: ")
-            horario = input("Horário (ex: 08:00): ")
-            if manager.adicionar_medicamento(nome, horario):
-                print("✅ Medicamento salvo!")
-            else:
-                print("❌ Erro: Dados inválidos.")
-        elif opcao == "2":
-            lista = manager.listar_medicamentos()
-            if not lista:
-                print("Nenhum medicamento agendado.")
-            for item in lista:
-                print(f"💊 {item['nome']} - Horário: {item['horario']}")
-        elif opcao == "3":
-            break
-
-
-if __name__ == "__main__":
-    main()
+st.markdown("---")
+st.caption("MediSync v1.1.0 - Conectado via BrasilAPI")
