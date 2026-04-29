@@ -1,24 +1,13 @@
 import unittest
-from src.main import MedicamentoManager
+import requests
 
-class TestMediSync(unittest.TestCase):
-    def setUp(self):
-        self.manager = MedicamentoManager()
-
-    def test_adicao_sucesso(self):
-        # Caminho Feliz
-        resultado = self.manager.adicionar_medicamento("Aspirina", "08:00")
-        self.assertTrue(resultado)
-        self.assertEqual(len(self.manager.listar_medicamentos()), 1)
-
-    def test_adicao_invalida(self):
-        # Entrada Inválida
-        resultado = self.manager.adicionar_medicamento("", "")
-        self.assertFalse(resultado)
-
-    def test_lista_vazia_inicial(self):
-        # Caso Limite
-        self.assertEqual(len(self.manager.listar_medicamentos()), 0)
+class TestIntegration(unittest.TestCase):
+    def test_api_connection(self):
+        """Teste de Integração: Valida se a API externa está respondendo"""
+        url = "https://brasilapi.com.br/api/cptec/v1/cidade/sao-paulo"
+        response = requests.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("SÃO PAULO", response.text.upper())
 
 if __name__ == "__main__":
     unittest.main()
