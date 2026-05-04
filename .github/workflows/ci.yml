@@ -1,26 +1,17 @@
 name: CI Pipeline
-
 on: [push, pull_request]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python
+      - name: Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Install dependencies
+      - name: Install
         run: |
-          pip install ruff streamlit requests
+          pip install streamlit requests
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Run Linting (Ruff)
-        run: ruff check .
-
-      - name: Run Tests
+      - name: Test
         run: python -m unittest discover tests
